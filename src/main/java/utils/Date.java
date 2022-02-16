@@ -11,7 +11,7 @@ public class Date {
     }
 
     public static String getCurrentDateSiteFormat(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }

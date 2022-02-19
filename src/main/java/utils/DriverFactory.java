@@ -3,6 +3,7 @@ package utils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -46,7 +47,9 @@ public class DriverFactory {
                     dv = new EdgeDriver();
                 default:
                     WebDriverManager.chromedriver().setup();
-                    dv = new ChromeDriver();
+                    ChromeOptions options = new ChromeOptions();
+                    //options.addArguments("--window-size=1920,1200");
+                    dv = new ChromeDriver(options);
             }
         dv.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         dv.manage().window().maximize();

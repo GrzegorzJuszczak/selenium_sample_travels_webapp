@@ -32,7 +32,7 @@ public class HomePage extends BasePage{
     private WebElement btnHome;
 
     @FindBy(linkText = "Signup")
-    private WebElement btnSignUp;
+    private WebElement btnSignup;
 
     @FindBy(linkText = "Login")
     private WebElement btnLogin;
@@ -62,7 +62,7 @@ public class HomePage extends BasePage{
 
         softAssert.assertTrue(imgLogo.isDisplayed());
         softAssert.assertTrue(btnHome.isDisplayed());
-        softAssert.assertTrue(btnSignUp.isDisplayed());
+        softAssert.assertTrue(btnSignup.isDisplayed());
         softAssert.assertAll();
         Log.info("Top panel elements are displayed.");
     }
@@ -116,6 +116,13 @@ public class HomePage extends BasePage{
         }
         softAssert.assertAll();
         Log.info("All links are working fine.");
+    }
+
+    public void goToSignupPage() {
+        Log.info("Going to signup page.");
+        waitUntilElementIsClickable(btnSignup);
+        btnSignup.click();
+        Log.info("Clicked on signup button.");
     }
 
 }

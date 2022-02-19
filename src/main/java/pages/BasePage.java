@@ -44,6 +44,13 @@ public class BasePage {
         executor.executeScript("arguments[0].click();", el);
     }
 
+    public void scrollWindowByJavaScript(int distance) {
+        Log.info("Scrolling down page with '"+distance+"' distance.");
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("window.scrollBy(0,"+distance+")");
+        Log.info("Scrolled down page with '"+distance+"' distance.");
+    }
+
     protected void textAssertion(String webText, String expText) {
         Log.info("Verifying if text displayed on website is as expected.");
         Assert.assertEquals(webText, expText);

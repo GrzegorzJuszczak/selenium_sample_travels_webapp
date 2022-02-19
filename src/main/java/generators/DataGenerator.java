@@ -39,12 +39,8 @@ public class DataGenerator {
         return faker.phoneNumber().cellPhone();
     }
 
-    public static String getSsn() {
-        return faker.idNumber().ssnValid();
-    }
-
-    public static String getUsername() {
-        return faker.name().username();
+    public static String getEmail(String localPart) {
+        return faker.internet().emailAddress(localPart);
     }
 
     public static String getPassword() {

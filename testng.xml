@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Parabank automation test suite" parallel="methods" thread-count="1">
+<suite name="phptravels.net automation test suite" parallel="methods" thread-count="1">
     <listeners>
         <listener class-name="utils.TestListener"/>
         <listener class-name="utils.WebDriverListener"/>
@@ -8,7 +8,12 @@
     <test name="phptravels.net tests">
         <classes>
             <!--<class name="HomePageTests"/>-->
-            <class name="SignupTests"/>
+            <class name="SignupTests">
+                <!--<methods>
+                    <include name="verifyStarsFilter"/>
+                </methods>-->
+
+        </class>
 
 
         </classes>

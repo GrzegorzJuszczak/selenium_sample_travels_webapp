@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utils.Log;
 
+import static data.SignupPageData.*;
+
 public class SignupPage extends BasePage {
 
     public SignupPage(WebDriver driver) {
@@ -33,7 +35,7 @@ public class SignupPage extends BasePage {
     @FindBy(css="input[name='password']")
     private WebElement inpPassword;
 
-    @FindBy(css="span[role='combobox'] b")
+    @FindBy(id="select2-account_type-container")
     private WebElement inpAccountType;
 
     @FindBy(xpath="//span[text()='Signup']")
@@ -57,22 +59,22 @@ public class SignupPage extends BasePage {
 
     public void enterDataToRegisterForm(String field, String data) {
         switch (field) {
-            case "First Name":
+            case FIRST_NAME:
                 enterData(field, inpFirstName, data);
                 break;
-            case "Last Name":
+            case LAST_NAME:
                 enterData(field, inpLastName, data);
                 break;
-            case "Phone":
+            case PHONE:
                 enterData(field, inpPhone, data);
                 break;
-            case "Email":
+            case EMAIL:
                 enterData(field, inpEmail, data);
                 break;
-            case "Password":
+            case PASSWORD:
                 enterData(field, inpPassword, data);
                 break;
-            case "Account Type":
+            case ACCOUNT_TYPE:
                 chooseValueFromSelectList(field, inpAccountType, data);
                 break;
             default:
@@ -83,6 +85,7 @@ public class SignupPage extends BasePage {
     public void chooseValueFromSelectList(String field, WebElement inp, String value) {
         Log.info("Choosing '"+field+"' with value '" + value + "' from select list.");
         waitUntilElementIsClickable(inp);
+        moveToElement(inp);
         inp.click();
         WebElement el = driver.findElement(By.xpath("//li[text()='"+value+"']"));
         waitUntilElementIsClickable(el);

@@ -118,6 +118,13 @@ public class HomePage extends BasePage{
         Log.info("All links are working fine.");
     }
 
+    public void goToTopMenuTab(String tab) {
+        Log.info("Going to top menu '"+tab+"' tab.");
+        WebElement tabEl = driver.findElement(By.xpath("//a[text()='"+tab+"']"));
+        tabEl.click();
+        Log.info("Clicked on top menu '"+tab+"' tab.");
+    }
+
     public void goToSignupPage() {
         Log.info("Going to signup page.");
         waitUntilElementIsClickable(btnSignup);

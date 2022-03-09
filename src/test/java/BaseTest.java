@@ -28,11 +28,8 @@ public class BaseTest {
     @AfterMethod
     public void tearDown()
     {
-        if(driver!=null) {
-            driver.manage().deleteAllCookies();
-            driver.quit();
-        }
-
+        driver.manage().deleteAllCookies();
+        driver.quit();
     }
 
     public WebDriver getDriver(){

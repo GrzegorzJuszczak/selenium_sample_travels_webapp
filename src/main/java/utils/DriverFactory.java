@@ -1,6 +1,7 @@
 package utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -39,20 +40,24 @@ public class DriverFactory {
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
                     dv = new FirefoxDriver();
+                    break;
                 case "ie":
                     WebDriverManager.iedriver().setup();
                     dv = new InternetExplorerDriver();
+                    break;
                 case "edge":
                     WebDriverManager.edgedriver().setup();
                     dv = new EdgeDriver();
+                    break;
                 default:
                     WebDriverManager.chromedriver().setup();
                     ChromeOptions options = new ChromeOptions();
-                    //options.addArguments("--window-size=1920,1200");
+                    options.addArguments("--window-size=1920,1200");
                     dv = new ChromeDriver(options);
             }
         dv.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        dv.manage().window().maximize();
+        //dv.manage().window().maximize();
+        dv.manage().window().setPosition(new Point(0,0));
 
         WebDriverListener listener = new WebEventListener();
         WebDriver driver = new EventFiringDecorator(listener).decorate(dv);

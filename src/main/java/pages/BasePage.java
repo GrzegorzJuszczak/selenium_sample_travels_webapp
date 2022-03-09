@@ -35,8 +35,11 @@ public class BasePage {
 
     protected void moveToElement(WebElement el) {
         Actions actions = new Actions(driver);
-        actions.moveToElement(el);
-        actions.build().perform();
+        actions.moveToElement(el).build().perform();
+    }
+
+    protected void scrollIntoView(WebElement el) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
     }
 
     protected void clickElementByJavaScript(WebElement el) {
@@ -45,10 +48,10 @@ public class BasePage {
     }
 
     public void scrollWindowByJavaScript(int distance) {
-        Log.info("Scrolling down page with '"+distance+"' distance.");
+        Log.info("Scrolling with '"+distance+"' distance.");
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("window.scrollBy(0,"+distance+")");
-        Log.info("Scrolled down page with '"+distance+"' distance.");
+        Log.info("Scrolled with '"+distance+"' distance.");
     }
 
     protected void textAssertion(String webText, String expText) {

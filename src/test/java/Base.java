@@ -6,7 +6,7 @@ import utils.*;
 
 import java.io.IOException;
 
-public class BaseTest {
+public class Base {
 
     protected WebDriver driver;
 
@@ -28,8 +28,12 @@ public class BaseTest {
     @AfterMethod
     public void tearDown()
     {
-        driver.manage().deleteAllCookies();
-        driver.quit();
+        if(driver != null) {
+            driver.manage().deleteAllCookies();
+            driver.close();
+            driver.quit();
+        }
+
     }
 
     public WebDriver getDriver(){

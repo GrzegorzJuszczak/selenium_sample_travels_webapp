@@ -14,32 +14,35 @@ public class SignupPage extends BasePage {
         super(driver);
     }
 
-    @FindBy(xpath="//h5[text()='Signup']")
+    @FindBy(xpath = "//h5[text()='Signup']")
     private WebElement headerSignup;
 
-    @FindBy(xpath="//p[text()='Please enter all credentials to signup']")
+    @FindBy(xpath = "//p[text()='Please enter all credentials to signup']")
     private WebElement txtUnderHeader;
 
-    @FindBy(css="input[name='first_name']")
+    @FindBy(css = "input[name='first_name']")
     private WebElement inpFirstName;
 
-    @FindBy(css="input[name='last_name']")
+    @FindBy(css = "input[name='last_name']")
     private WebElement inpLastName;
 
-    @FindBy(css="input[name='phone']")
+    @FindBy(css = "input[name='phone']")
     private WebElement inpPhone;
 
-    @FindBy(css="input[name='email']")
+    @FindBy(css = "input[name='email']")
     private WebElement inpEmail;
 
-    @FindBy(css="input[name='password']")
+    @FindBy(css = "input[name='password']")
     private WebElement inpPassword;
 
-    @FindBy(id="select2-account_type-container")
+    @FindBy(id = "select2-account_type-container")
     private WebElement inpAccountType;
 
-    @FindBy(xpath="//span[text()='Signup']")
+    @FindBy(xpath = "//span[text()='Signup']")
     private WebElement btnSignup;
+
+    @FindBy(css = "div[class*='alert']")
+    private WebElement alertEmailExist;
 
 
 
@@ -50,53 +53,60 @@ public class SignupPage extends BasePage {
         Log.info("Signup page is displayed.");
     }
 
-    public void enterData(String field, WebElement inp, String value) {
-        Log.info("Entering '" + field + "' with value '" + value + "' to register form.");
+    public void enterData(FormField labels, WebElement inp, String value) {
+        Log.info("Entering '" + labels + "' with value '" + value + "' to register form.");
         waitUntilElementIsVisible(inp);
         inp.sendKeys(value);
-        Log.info("Entered '" + value + "' into '" + field + "' field.");
+        Log.info("Entered '" + value + "' into '" + labels + "' field.");
     }
 
-    public void enterDataToRegisterForm(String field, String data) {
-        switch (field) {
+    public void enterDataToRegisterForm(FormField labels , String data) {
+        switch (labels) {
             case FIRST_NAME:
-                enterData(field, inpFirstName, data);
+                enterData(labels, inpFirstName, data);
                 break;
             case LAST_NAME:
-                enterData(field, inpLastName, data);
+                enterData(labels, inpLastName, data);
                 break;
             case PHONE:
-                enterData(field, inpPhone, data);
+                enterData(labels, inpPhone, data);
                 break;
             case EMAIL:
-                enterData(field, inpEmail, data);
+                enterData(labels, inpEmail, data);
                 break;
             case PASSWORD:
-                enterData(field, inpPassword, data);
+                enterData(labels, inpPassword, data);
                 break;
             case ACCOUNT_TYPE:
-                chooseValueFromSelectList(field, inpAccountType, data);
+                chooseValueFromSelectList(labels, inpAccountType, data);
                 break;
             default:
                 Log.warn("Insert correct data.");
         }
     }
 
-    public void chooseValueFromSelectList(String field, WebElement inp, String value) {
-        Log.info("Choosing '"+field+"' with value '" + value + "' from select list.");
+    public void chooseValueFromSelectList(FormField labels, WebElement inp, String value) {
+        Log.info("Choosing '"+labels+"' with value '" + value + "' from select list.");
         waitUntilElementIsClickable(inp);
         moveToElement(inp);
         inp.click();
         WebElement el = driver.findElement(By.xpath("//li[text()='"+value+"']"));
         waitUntilElementIsClickable(el);
         el.click();
-        Log.info("'"+field+"' with value '" + value + "' was chosen from list.");
+        Log.info("'"+labels+"' with value '" + value + "' was chosen from list.");
     }
 
     public void clickOnSignupButton() {
         waitUntilElementIsClickable(btnSignup);
         moveToElement(btnSignup);
         btnSignup.click();
+    }
+
+    public void verifyIfEmailExistAlertIsDisplayed(String expText) {
+        Log.info("Verifying if email exist alert is displayed.");
+        waitUntilElementIsVisible(alertEmailExist);
+        textAssertion(alertEmailExist.getText(), expText);
+        Log.info("Email exist alert is displayed.");
     }
 
 

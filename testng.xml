@@ -7,8 +7,10 @@
     </listeners>
     <test name="phptravels.net tests">
         <classes>
-            <!--<class name="HomePageTests"/>-->
-            <class name="SignupTests">
+            <class name="HomePageTests"/>
+            <class name="LoginTests"/>
+            <class name="SignupTests"/>
+            <class name="HotelsTests">
                 <!--<methods>
                     <include name="verifyStarsFilter"/>
                 </methods>-->

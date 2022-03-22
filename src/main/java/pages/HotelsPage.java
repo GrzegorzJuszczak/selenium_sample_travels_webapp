@@ -8,6 +8,7 @@ import org.testng.asserts.SoftAssert;
 import utils.Log;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HotelsPage extends BasePage {
 
@@ -27,6 +28,27 @@ public class HotelsPage extends BasePage {
     @FindBy(xpath = "//span[contains(text(),'Search')]")
     private WebElement btnSearch;
 
+    @FindBy(xpath = "//h3[text()='Star Grade']")
+    private WebElement headerStarGrade;
+
+    @FindBy(xpath = "//strong[contains(text(),'No results found')]")
+    private List<WebElement> txtNoResults;
+
+    @FindBy(css = "div[class*='sidebar-price-range'] span[class*='irs-handle from']")
+    private WebElement handleFrom;
+
+    @FindBy(css = "div[class*='sidebar-price-range'] span[class*='irs-handle to']")
+    private WebElement handleTo;
+
+    @FindBy(css = "span[class='irs-from']")
+    private WebElement narrowedPriceFrom;
+
+    @FindBy(css = "span[class='irs-to']")
+    private WebElement narrowedPriceTo;
+
+    @FindBy(css = "li:not([style*='none']) span[class='price__num'] strong")
+    private List<WebElement> prices;
+
     SoftAssert softAssert = new SoftAssert();
 
 
@@ -39,7 +61,6 @@ public class HotelsPage extends BasePage {
     public void insertHotelAndClickOnSearchButton(String city) {
         Log.info("Entering city '"+city+"' into search input.");
         waitUntilElementIsClickable(spanSearch);
-        scrollWindowByJavaScript(0);
         spanSearch.click();
         waitUntilElementIsVisible(inpSearch);
         inpSearch.clear();
@@ -53,10 +74,12 @@ public class HotelsPage extends BasePage {
 
     public void clickOnStarsFilterAndVerifyResults (int stars) {
         Log.info("Clicking on star grade filter in left menu. Choosing '"+stars+"' stars.");
-        WebElement starsFilter = driver.findElement(By.cssSelector("label[for='stars_"+stars+"']"));
+        WebElement starsFilter = driver.findElement(By.cssSelector("label[for='stars_" + stars + "']"));
+        waitUntilElementIsClickable(starsFilter);
         starsFilter.click();
         verifyStarsAmountInResultsAfterFilter(stars);
         Log.info("Clearing filter.");
+        waitUntilElementIsClickable(starsFilter);
         starsFilter.click();
     }
 
@@ -72,5 +95,44 @@ public class HotelsPage extends BasePage {
             softAssert.assertTrue(stars.size() == starsFilter);
         }
         softAssert.assertAll();
+    }
+
+    public void narrowPriceRange(int x) {
+        Log.info("Narrowing price with website slider mechanism.");
+        waitUntilElementIsVisible(handleFrom);
+        dragAndDrop(handleFrom, x, 0);
+        dragAndDrop(handleTo, -x, 0);
+        Log.info("Narrowed from and to with '"+x+"' pixels.");
+    }
+
+    public double[] getNarrowedPriceRange() {
+        double [] priceRange = new double[2];
+        Log.info("Getting narrowed price values from slider mechanism.");
+        waitUntilElementIsVisible(narrowedPriceFrom);
+        String priceFrom = narrowedPriceFrom.getText();
+        waitUntilElementIsVisible(narrowedPriceTo);
+        String priceTo = narrowedPriceTo.getText();
+        Log.info("Price range was set from '"+priceFrom+"' to '"+priceTo+"'.");
+        priceRange[0] = Double.parseDouble(priceFrom);
+        priceRange[1] = Double.parseDouble(priceTo);
+        return priceRange;
+    }
+
+    public List<Double> getAllPrices() {
+        Log.info("Getting all prices from narrowed prices results.");
+        List<Double> txtPrices = prices.stream().map(WebElement::getText).map(Double::parseDouble).collect(Collectors.toList());
+        Log.info("All narrowed prices results: " + txtPrices);
+        return txtPrices;
+    }
+
+    public void verifyPricesRange(List<Double> prices, double min, double max) {
+        Log.info("Verifying if all price results are between min '"+min+"' and max '"+max+"' range.");
+        for(Double price: prices){
+            Log.info("Verifying if price '"+price+"' is between min '"+min+"' and max '"+max+"' range.");
+            softAssert.assertTrue(price >= min && price <= max, "Price '"+price+"' is out of range.");
+            Log.info("Price '"+price+"' is between min '"+min+"' and max '"+max+"' range.");
+            softAssert.assertAll();
+        }
+
     }
 }

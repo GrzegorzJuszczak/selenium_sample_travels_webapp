@@ -1,4 +1,3 @@
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
@@ -6,7 +5,7 @@ import java.io.IOException;
 
 import static data.HomePageData.*;
 
-public class HomePageTests extends BaseTest {
+public class HomePageTests extends Base {
 
     private HomePage homePage;
 

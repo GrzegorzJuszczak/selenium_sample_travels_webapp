@@ -2,6 +2,7 @@ package pages;
 
 
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -42,6 +43,11 @@ public class BasePage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", el);
     }
 
+    protected void goToTopOfPage() {
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.HOME).build().perform();
+    }
+
     protected void clickElementByJavaScript(WebElement el) {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("arguments[0].click();", el);
@@ -58,6 +64,11 @@ public class BasePage {
         Log.info("Verifying if text displayed on website is as expected.");
         Assert.assertEquals(webText, expText);
         Log.info("Text from website '"+webText+"' is the same as expected '"+expText+"'.");
+    }
+
+    protected void dragAndDrop(WebElement element, int x, int y) {
+        Actions actions = new Actions(driver);
+        actions.dragAndDropBy(element, x, y).build().perform();
     }
 
 

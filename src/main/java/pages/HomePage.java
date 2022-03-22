@@ -59,11 +59,9 @@ public class HomePage extends BasePage{
 
     public void verifyTopPanelElementsAreDisplayed() {
         Log.info("Verifying if top panel elements are displayed.");
-
-        softAssert.assertTrue(imgLogo.isDisplayed());
-        softAssert.assertTrue(btnHome.isDisplayed());
-        softAssert.assertTrue(btnSignup.isDisplayed());
-        softAssert.assertAll();
+        waitUntilElementIsVisible(imgLogo);
+        waitUntilElementIsVisible(btnHome);
+        waitUntilElementIsVisible(btnSignup);
         Log.info("Top panel elements are displayed.");
     }
 
@@ -130,6 +128,13 @@ public class HomePage extends BasePage{
         waitUntilElementIsClickable(btnSignup);
         btnSignup.click();
         Log.info("Clicked on signup button.");
+    }
+
+    public void goToLoginPage() {
+        Log.info("Going to login page.");
+        waitUntilElementIsClickable(btnLogin);
+        btnLogin.click();
+        Log.info("Clicked on login button.");
     }
 
 }

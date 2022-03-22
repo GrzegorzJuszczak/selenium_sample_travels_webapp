@@ -9,7 +9,7 @@ public class HomePageData {
 
     public static final String HOME_TAB = "Home";
     public static final String HOTELS_TAB = "Hotels";
-    public static final String FLIGHTS_TAB = "Flights";
+    public static final String FLIGHTS_TAB = "flights";
     public static final String TOURS_TAB = "Tours";
     public static final String VISA_TAB = "Visa";
     public static final String BLOG_TAB = "Blog";

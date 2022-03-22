@@ -10,6 +10,7 @@
             <class name="HomePageTests"/>
             <class name="LoginTests"/>
             <class name="SignupTests"/>
+            <class name="FlightsTests"/>
             <class name="HotelsTests">
                 <!--<methods>
                     <include name="verifyStarsFilter"/>
